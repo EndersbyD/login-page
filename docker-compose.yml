@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: auth-db
+    ports:
+      - "5432:5432" # Maps port 5432 on your machine to the container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth-db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Persist data even if the container stops
+      - ./prisma/migrations:/docker-entrypoint-initdb.d/ # Run migrations on startup
