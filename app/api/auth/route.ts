@@ -17,11 +17,13 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { username, password } = body;
 
-    const { password: hashedPassword } = await prisma.account.findUnique({
+    const result = await prisma.account.findUnique({
       where: {
         username: username,
       },
     });
+
+    const hashedPassword = result ? result.password : '';
 
     const isMatch = await bcrypt.compare(password, hashedPassword);
 

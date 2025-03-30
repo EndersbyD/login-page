@@ -5,8 +5,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const SECRET_KEY = process.env.JWT_SECRET;
-
 // Define the POST method for the authentication API
 export async function POST(req: NextRequest) {
   try {
@@ -18,7 +16,7 @@ export async function POST(req: NextRequest) {
     // Replace this with actual user validation logic (e.g., database query)
     if (username && password) {
       // Generate a JWT token
-      const user = await prisma.account.create({
+      await prisma.account.create({
         data: {
           id: uuidv4(),
           username,
